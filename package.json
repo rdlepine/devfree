@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "Test",
   "main": "server.js",
-  "homepage": "http://simplesemisolutions.com/freedomsbell",
   "scripts": {
     "start": "node server.js",
     "server": "nodemon server.js",
