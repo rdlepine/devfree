@@ -28,18 +28,18 @@ const styles = {
         display: 'flex', 
         justifyContent: 'space-between',
         width: '100%',
-        height: 150,
+        height: 130,
         backgroundImage: `url(${flagImage})`
     },
     logo: {
         marginLeft: 50,
-        height: 110,
-        marginTop: 20,
+        height: 100,
+        marginTop: 10,
 
     },
     logoText: {
        marginRight: 80,
-       marginTop: 40,
+       marginTop: 20,
        height: 80,
     },
     appBar: {
