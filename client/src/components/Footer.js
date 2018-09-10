@@ -3,12 +3,9 @@ import { withStyles } from '@material-ui/core/styles';
 
 const styles = {
     root: {
-      flexGrow: 1,
+     
     },
-    flex: {
-      flexGrow: 1,
-    },
-    footer: {
+     footer: {
         position: 'absolute',
         bottom: 0,
         width: '100%',
