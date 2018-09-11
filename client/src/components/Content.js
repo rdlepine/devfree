@@ -4,6 +4,7 @@ import Login from './security/Login'
 import Register from './security/Register'
 import Main from './Main'
 import DisplayVideo from './DisplayVideo'
+import About from './About'
 
 
 class Content extends Component {
@@ -16,6 +17,7 @@ class Content extends Component {
                 <Route path='/login' component={Login}/>
                 <Route path='/register' component={Register}/>
                 <Route path='/video' component={DisplayVideo} />
+                <Route path='/about' component={About} />
             </RouterSwitch>
            </div>
         )

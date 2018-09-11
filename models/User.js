@@ -4,9 +4,16 @@ const Schema = mongoose.Schema
 //Create User Schema
 
 const UserSchema = new Schema({
-    name: {
+    firstName: {
         type: String,
         required: true,
+    },
+    lastName: {
+        type: String,
+        required: true,
+    },
+    nickName: {
+        type: String,
     },
     email: {
         type: String,
@@ -19,9 +26,24 @@ const UserSchema = new Schema({
     avatar: {
         type: String,
     },
-    data: {
+    missionStatement: {
+        type: String,
+    },
+    createDate: {
         type: Date,
         default: Date.now,
+    },
+    lastAccessed: {
+        type: Date,
+        default: Date.now,
+    },
+    active: {
+        type: Number,
+        default: 1,
+    }    ,
+    admin: {
+        type: Number,
+        default: 0,
     }
 })
 
