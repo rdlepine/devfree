@@ -4,14 +4,14 @@ import {Grid, Card, CardHeader, CardContent, Paper} from '@material-ui/core'
 import { withStyles } from '@material-ui/core'
 import IconButton from '@material-ui/core/IconButton';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
+import ThumbUp from '@material-ui/icons/ThumbUp';
+import ThumbDown from '@material-ui/icons/ThumbDown';
 
 const styles = theme => ({
     root: {
-      flexGrow: 1,
-    },
-    gridList: {
-      width: '100%',
-      height: 450,
+      display: 'flex',
+      flexDirection: 'column',
+      marginTop: 80,
     },
     subheader: {
       width: '100%',
@@ -27,23 +27,21 @@ const styles = theme => ({
         color: '#c0c0c0',
     },
     video: {
-        display: 'flex',
         justifyContent: 'center',
-        width: '80%',
-        height: '80%'
+        width: '90%',
+        height: '90%',
+        margin: '20px 10px 10px 20px',
+       
     },
     paper: {
-        display: 'flex',
-        justifyContent: 'center',
-        width: '60%',
-        height: '60%',
+        margin: 'auto',
+        width: '70%',
+        height: '70%',
     },
-    videoViews: {
-        display: "flex",
-        justifyContent: "space-between",
-    },
-    videoSpan: {
-        margin: "0 20 0 20",
+    upOrDown: {
+        margin: '0 30px 0 10px',
+        fontSize: 28,
+        fontWeight: 500,
     }
 
   });
@@ -51,7 +49,9 @@ const styles = theme => ({
 class DisplayVideo extends Component {
 
     state = {
-        video: {}
+        video: {},
+        voteUp: 0,
+        voteDown: 0,
     }
 
     componentDidMount () {
@@ -60,22 +60,37 @@ class DisplayVideo extends Component {
         this.setState({video: video})
     }
 
+    voteUp = () => {
+        this.setState({voteUp: this.state.voteUp + 1})
+    }
+
+    voteDown = () => {
+        this.setState({voteDown: this.state.voteDown + 1})
+    }
+
     render() {
-        const {video} = this.state
+        const {video, voteUp, voteDown} = this.state
         const {classes} = this.props
         
         return (
             <div className={classes.root}>
                 <h1>{video.title}</h1>
-                    <Paper className={classes.paper}>
-                        <video controls className={classes.video}
-                            preload="metadata"
-                        >
-                            <source src={video.sources + "#t=5"} type="video/mp4" />
-                            <source src="movie.ogg" type="video/ogg" />
-                            Your browser does not support the video tag.
-                        </video>   
-                    </Paper>               
+                <Paper className={classes.paper}>
+                    <video controls className={classes.video}
+                        autoPlay="true"
+                        preload="metadata"
+                    >
+                        <source src={video.sources + "#t=5"} type="video/mp4" />
+                        <source src="movie.ogg" type="video/ogg" />
+                        Your browser does not support the video tag.
+                    </video>   
+                    <div className={classes.votes}>
+                        <ThumbUp color='action' style={{fontSize: 36}} onClick={this.voteUp} />
+                        <span className={classes.upOrDown}>{voteUp}</span>
+                        <ThumbDown color='action' style={{fontSize: 36}} onClick={this.voteDown} />
+                        <span className={classes.upOrDown}>{voteDown}</span>
+                    </div>
+                </Paper>               
             </div>
         )
     }

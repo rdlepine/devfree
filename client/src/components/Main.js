@@ -1,10 +1,9 @@
 import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
 import mediaJSON from '../data/streaming.js'
-import {Grid, Card, CardHeader, CardContent, Paper} from '@material-ui/core'
+import {Grid, Paper, InputAdornment, IconButton} from '@material-ui/core'
 import { withStyles, TextField } from '@material-ui/core'
-import IconButton from '@material-ui/core/IconButton';
-import StarBorderIcon from '@material-ui/icons/StarBorder';
+import {Search} from '@material-ui/icons';
 
 const styles = theme => ({
     root: {
@@ -53,23 +52,67 @@ const styles = theme => ({
     top: {
         display: 'flex',
         justifyContent: 'space-between',
+    },
+    headerDiv: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        marginLeft: 20,
+        width: '90%',
+
+    },
+    search: {
+        marginTop: 10,
     }
 
   });
 
 class Main extends Component {
 
+    state = {
+        videos: [],
+        filter: '',
+    }
+
+    componentDidMount() {
+        this.setState({videos: mediaJSON.categories[0].videos})
+    }
+
+    onSearch = (event) => {
+        const search = event.target.value
+        this.setState({filter: search})
+       
+    }
+
     render() {
-        const videos = mediaJSON.categories[0].videos
+        const {videos, filter} = this.state
+
+        const fvideos = videos.filter((v) => {
+            return v.title.toLowerCase().indexOf(filter.toLowerCase()) >= 0
+        })
+
         const {classes} = this.props
         return (
             <div className={classes.root}>
                 <div className={classes.top}>
-                    <h1 className="padLeft">Trending</h1>
-                    <TextField className="padRight" label="Search" />
+                    <div className={classes.headerDiv}>
+                        <h1>Trending</h1>
+                        <TextField 
+                            className={classes.search}
+                            id="searchVideos"
+                            label="Search"
+                            onChange={this.onSearch}
+                            InputProps={{
+                            startAdornment: (
+                                <InputAdornment position="start">
+                                    <Search />
+                                </InputAdornment>
+                            ),
+                            }}
+                        />
+                    </div>
                 </div>
                 <Grid container spacing={8} >
-                    {videos.map( (data, index) => (
+                    {fvideos.map( (data, index) => (
                         <Grid item xl={3} lg={3} md={4} sm={6} xs={12} > 
                             <Paper className={classes.card}>
                                 <Link to={{

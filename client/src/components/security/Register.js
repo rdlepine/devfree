@@ -7,6 +7,11 @@ import {connect} from 'react-redux'
 import logo from '../../images/logo.png'
 
 const styles = {
+    container: {
+        display: 'flex',
+        flexWrap: 'wrap',
+        justifyContent: 'space-around',
+    },
     card: {
         
         top: 0,
@@ -15,20 +20,30 @@ const styles = {
         bottom: 0,
         margin: 'auto',
         marginTop: 100,
-        height: 600,
+        height: 560,
         width: 600,
         background: "#ffffff",
     },
     login: {
         marginTop: 30,
+        width: '90%',
     },
     media: {
       height: 0,
       paddingTop: '56.25%', // 16:9
     },
     margin: {
-        marginTop: 40,
-        width: 300,
+        margin: '20px 20px 0 0',
+        width: 250,
+    },
+    textarea: {
+        margin: '20px 20px 0 0',
+        width: 520,
+        maxLength: 255,
+
+    },
+    textField: {
+        width: 200,
     },
     header: {
         
@@ -92,30 +107,92 @@ class Register extends Component {
                     />    
                     <CardContent>
                     <img className={classes.logo} src={logo} alt="freedoms Bell" />
-                    <FormControl className={classes.margin}>
-                        <InputLabel className={classes.labelText} htmlFor="email">Email</InputLabel>
-                        <Input
-                            id="email"
+                    <form className={classes.container} novalidatae autocomplete="off">
+                        <FormControl className={classes.margin}>
+                            <InputLabel className={classes.labelText} htmlFor="firstName">First Name</InputLabel>
+                            <Input
+                                id="firstName"
+                                startAdornment={
+                                    <InputAdornment position="start">
+                                       *
+                                    </InputAdornment>
+                                }
+                            />
+                        </FormControl>
+                        <FormControl className={classes.margin}>
+                            <InputLabel className={classes.labelText} htmlFor="lastName">Last Name</InputLabel>
+                            <Input
+                                id="lastName"
+                                inputType="email"
+                                startAdornment={
+                                    <InputAdornment position="start">
+                                        *
+                                    </InputAdornment>
+                                }
+                            />
+                        </FormControl>
+
+                        <FormControl className={classes.margin}>
+                            <InputLabel className={classes.labelText} htmlFor="email">Email</InputLabel>
+                            <Input type="email"
+                                startAdornment={
+                                    <InputAdornment position="start">
+                                        *
+                                    </InputAdornment>
+                                }
+                            />
+                        </FormControl>
+                        <FormControl className={classes.margin}>
+                            <InputLabel className={classes.labelText} htmlFor="nickName">Nickname</InputLabel>
+                            <Input
+                                id="nickName"
+                                startAdornment={
+                                    <InputAdornment position="start">
+                                        
+                                    </InputAdornment>
+                                }
+                            />
+                        </FormControl>
+
+                        <FormControl className={classes.margin}>
+                        <InputLabel className={classes.labelText} htmlFor="password">Password</InputLabel>
+                        <Input type="password"
                             startAdornment={
                                 <InputAdornment position="start">
-                                    <Email />
+                                    *
                                 </InputAdornment>
                             }
                         />
-                    </FormControl>
-                    <FormControl className={classes.margin}>
-                        <InputLabel className={classes.labelText} htmlFor="firstName">First Name</InputLabel>
-                        <Input
-                            id="firstName"
-                            startAdornment={
-                                <InputAdornment position="start">
-                                    <PersonAdd />
-                                </InputAdornment>
-                            }
-                        />
+                        </FormControl>
+                        <FormControl className={classes.margin}>
+                            <InputLabel className={classes.labelText} htmlFor="nickName">Verify Password</InputLabel>
+                            <Input
+                                id="verifyPassword"
+                                startAdornment={
+                                    <InputAdornment position="start">
+                                        *
+                                    </InputAdornment>
+                                }
+                            />
+                        </FormControl>
+
+                        <FormControl className={classes.textarea}>
+                            <InputLabel className={classes.labelText} htmlFor="mission">Mission Statement</InputLabel>
+                            <Input
+                                id="verifyPassword"
+                                multiline="true"
+                                maxLength="255"
+                                rowsMax="4"
+                                startAdornment={
+                                    <InputAdornment position="start">
+                                        
+                                    </InputAdornment>
+                                }
+                            />
+                        </FormControl>
+
                         <Button variant="contained" color="primary" className={classes.login} onClick={this.logIn}>REGISTER</Button>
-                       
-                     </FormControl>
+                    </form>
                     </CardContent>
                 </Card>
             </div>
