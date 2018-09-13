@@ -67,7 +67,7 @@ router.post('/login', (req, res) => {
                             name: user.name,
                             avatar: user.avatar
                         }
-                        console.log(keys)
+                //        console.log(keys)
                         jwt.sign(payload, keys.secretOrKey, {expiresIn: 3600}, (err, token) => {
                             if(err) {
                                 return res.status(400).json({err:err})

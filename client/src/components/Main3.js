@@ -1,26 +1,47 @@
 import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
 import mediaJSON from '../data/streaming.js'
-import {Paper, InputAdornment, IconButton} from '@material-ui/core'
+import {Grid, Paper, InputAdornment, IconButton} from '@material-ui/core'
 import { withStyles, TextField } from '@material-ui/core'
 import {Search} from '@material-ui/icons';
 
 const styles = theme => ({
     root: {
-      display: 'flex',
-      flexDirection: 'column',
+      flexGrow: 1,
+    },
+    gridList: {
+      width: '100%',
+      height: 450, 
     },
     subheader: {
       width: '100%',
+    },
+    imageSpacing: {
+        margin: 10,
+    },
+    titleBar: {
+        position: 'absolute',
+        width: 320,
+        top: 140,
+        
+        color: '#c0c0c0',
     },
     video: {
         margin: 0,
     },
     card: {
-        margin: '10px 10px 0px 0px',
         paddingTop: 10,
         width: 230,
         height: 180,
+    },
+    cardHeader: {
+        height: 40,
+        borderRadius: 10,
+        backgroundImage: 'linear-gradient(to top, #1e3c72 0%, #1e3c72 1%, #2a5298 100%)',
+        margin: 0,
+        width: '100%',
+        boxShadow:
+        "0 12px 20px -10px rgba(156, 39, 176, 0.28), 0 4px 20px 0px rgba(0, 0, 0, 0.12), 0 7px 8px -5px rgba(156, 39, 176, 0.2)"
 
     },
     videoViews: {
@@ -49,16 +70,11 @@ const styles = theme => ({
     title: {
         fontSize: 20,
         fontWeight: 600,
-    },
-    wrapVideos: {
-        display: 'flex',
-        flexWrap: 'wrap',
-        height: 22,
     }
 
   });
 
-class Main extends Component {
+class Main3extends Component {
 
     state = {
         videos: [],
@@ -103,9 +119,10 @@ class Main extends Component {
                         />
                     </div>
                 </div>
-                <div className={classes.wrapVideos}>
+                <Grid container spacing={8} >
                     {fvideos.map( (data, index) => (
-                           <Paper className={classes.card}>
+                        <Grid item xl={2} lg={2} md={3} sm={6} xs={12} > 
+                            <Paper className={classes.card}>
                                 <Link to={{
                                     pathname: '/video',
                                     state: {
@@ -131,12 +148,14 @@ class Main extends Component {
 
                                 </div>
                             </Paper>               
+                            </Grid>
                     ))}  
-                </div>
+                </Grid>
+               
             </div>
         )
     }
 
 }
 
-export default withStyles(styles)(Main)
+export default withStyles(styles)(Main3)
