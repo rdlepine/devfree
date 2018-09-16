@@ -9,7 +9,9 @@ const passport = require('passport')
 
 
 router.post('/register', (req, res) => {
-    const {name, email, password} = req.body
+
+    const {firstName, lastName, email, password, pageName, missionStatement} = req.body
+
 
     User.findOne({
         email: email
@@ -23,9 +25,12 @@ router.post('/register', (req, res) => {
                 d: 'mm',
             })
             const newUser = new User({
-                name: name,
+                firstName: firstName,
+                lastName: lastName,
                 email: email,
                 password: password,
+                pageName: pageName,
+                missionStatement: missionStatement,
                 avatar: avatar,
             })
            
@@ -39,7 +44,7 @@ router.post('/register', (req, res) => {
                 })
             })
         }
-    })
+    }).catch( (err) => console.log(err))
 
 })
 

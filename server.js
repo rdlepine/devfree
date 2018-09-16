@@ -4,9 +4,10 @@ const bodyParser = require('body-parser')
 const passport = require('passport')
 const cluster = require('cluster');
 const numCPUs = require('os').cpus().length;
-const users= require('./routes/api/users')
+const users = require('./routes/api/users')
 const profile= require('./routes/api/profile')
-const posts= require('./routes/api/posts')
+const posts = require('./routes/api/posts')
+const cors = require('cors')
 
 
 if (cluster.isMaster) {
@@ -23,6 +24,7 @@ if (cluster.isMaster) {
   } else {
 
     const app = express()
+    app.use(cors())
     //Body Parser
     app.use(bodyParser.urlencoded({extended:false}))
     app.use(bodyParser.json())

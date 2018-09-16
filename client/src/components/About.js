@@ -25,7 +25,7 @@ function About(props) {
 
     return (
         <div className={classes.displayPage}>
-            <h1>About Freedom's Bell</h1>
+            <Typography variant="display2" style={{marginTop: 20}} >About Freedom's Bell</Typography>
             <Grid container spacing={12}>
 
                 <Grid item xs={2} />

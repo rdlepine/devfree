@@ -1,10 +1,12 @@
 import React, {Component} from 'react'
+import {Redirect} from 'react-router-dom'
 import { withStyles } from '@material-ui/core/styles'
-import {Card, CardHeader, CardContent, FormControl, Input, InputAdornment, InputLabel, Button, Avatar} from '@material-ui/core'
+import {Card, CardHeader, CardContent, FormControl, Input, InputAdornment, InputLabel, Button, Avatar, Typography} from '@material-ui/core'
 import {userLogin} from '../../containers/actions';
-import {Email, Lock, PersonAdd} from '@material-ui/icons'
+import {PersonAdd} from '@material-ui/icons'
 import {connect} from 'react-redux'
 import logo from '../../images/logo.png'
+import * as api from '../../data/api.js'
 
 const styles = {
     container: {
@@ -20,7 +22,7 @@ const styles = {
         bottom: 0,
         margin: 'auto',
         marginTop: 100,
-        height: 560,
+        height: 580,
         width: 600,
         background: "#ffffff",
     },
@@ -82,18 +84,103 @@ const styles = {
         textDecoration: "none",
         color: '#304FFE',
     },
+    errorMessage: {
+        fontSize: 22,
+        marginTop: 10,
+        color: 'red',
+
+    },
+    passwordInstructions: {
+        marginTop: 10,
+        textAlign: 'left',
+    }
    
   };
 
 class Register extends Component {
 
-    logIn = (user) => {
-        this.props.userLogin({user:{isLoggedIn:true}})
+    state = {
+        user: {
+            firstName: '', 
+            lastName: '',
+            pageName: '',
+            email: '',
+            password: '',
+            missionStatement: '',
+        },
+        err: '',
+        toSucces: false,
+    }
+
+    formFill(property, event) {
+    
+       let {user} = this.state
+       user[property] = event.target.value
+
+       this.setState({user:user})
+    
+
+    }
+
+    register = () => {
+
+        this.setState({err:''})
+        const {user, err} = this.state
+
+        if(user.password !== user.verifyPassword) {
+            this.setState({err:'Passwords do Not match'})
+            return
+        }
+        
+
+
+        let checkPassword = this.validate(user.password)
+
+        if(!checkPassword) {
+           this.setState({err:'Invalid Password'})
+           return
+        }
+
+
+        api.doRegister(this.state.user).then( (user) => {
+            this.setState({err: user.email})
+            this.setState({toSuccess: true})
+        })
+    }
+
+    onSubmit = (event) => {
+       event.preventDefault()
+       this.register()
+    }
+
+    validate(password) {
+        var minMaxLength = /^[\s\S]{8,32}$/,
+            upper = /[A-Z]/,
+            lower = /[a-z]/,
+            number = /[0-9]/,
+            special = /[ !"#$%&'()*+,\-./:;<=>?@[\\\]^_`{|}~]/;
+    
+        if (minMaxLength.test(password) &&
+            upper.test(password) &&
+            lower.test(password) &&
+            number.test(password) &&
+            special.test(password)
+        ) {
+            return true;
+        }
+    
+        return false;
     }
 
     render () {
     
         const {classes} = this.props
+        const {err, toSuccess} = this.state
+ 
+        if(toSuccess) {
+            return <Redirect to='/success' />
+        }
+
 
         return (
             <div>
@@ -107,13 +194,14 @@ class Register extends Component {
                     />    
                     <CardContent>
                     <img className={classes.logo} src={logo} alt="freedoms Bell" />
-                    <form className={classes.container} novalidatae autocomplete="off">
+                    <form className={classes.container} onSubmit={this.onSubmit}>
                         <FormControl className={classes.margin}>
                             <InputLabel className={classes.labelText} htmlFor="firstName">First Name</InputLabel>
-                            <Input
+                            <Input required
                                 id="firstName"
+                                onChange={this.formFill.bind(this, 'firstName')}
                                 startAdornment={
-                                    <InputAdornment position="start">
+                                    <InputAdornment position="start"> 
                                        *
                                     </InputAdornment>
                                 }
@@ -122,7 +210,9 @@ class Register extends Component {
                         <FormControl className={classes.margin}>
                             <InputLabel className={classes.labelText} htmlFor="lastName">Last Name</InputLabel>
                             <Input
+                                required
                                 id="lastName"
+                                onChange={this.formFill.bind(this, 'lastName')}
                                 inputType="email"
                                 startAdornment={
                                     <InputAdornment position="start">
@@ -135,7 +225,9 @@ class Register extends Component {
                         <FormControl className={classes.margin}>
                             <InputLabel className={classes.labelText} htmlFor="email">Email</InputLabel>
                             <Input type="email"
-                                startAdornment={
+                                   required
+                                   onChange={this.formFill.bind(this, 'email')}
+                                   startAdornment={
                                     <InputAdornment position="start">
                                         *
                                     </InputAdornment>
@@ -143,9 +235,10 @@ class Register extends Component {
                             />
                         </FormControl>
                         <FormControl className={classes.margin}>
-                            <InputLabel className={classes.labelText} htmlFor="nickName">Nickname</InputLabel>
+                            <InputLabel className={classes.labelText} htmlFor="pageName">Page Name</InputLabel>
                             <Input
-                                id="nickName"
+                                id="pageName"
+                                onChange={this.formFill.bind(this, 'pageName')}
                                 startAdornment={
                                     <InputAdornment position="start">
                                         
@@ -154,20 +247,24 @@ class Register extends Component {
                             />
                         </FormControl>
 
+                        <Typography variamt="paragraph1" className={classes.passwordInstructions}>Password must be at least 8 characters, contain an upper and lower case letter, a number and a special character.</Typography>
                         <FormControl className={classes.margin}>
-                        <InputLabel className={classes.labelText} htmlFor="password">Password</InputLabel>
-                        <Input type="password"
-                            startAdornment={
-                                <InputAdornment position="start">
-                                    *
-                                </InputAdornment>
-                            }
-                        />
+                            <InputLabel className={classes.labelText} htmlFor="password">Password</InputLabel>
+                            <Input type="password"
+                                required
+                                onChange={this.formFill.bind(this, 'password')}
+                                startAdornment={
+                                    <InputAdornment position="start">
+                                        *
+                                    </InputAdornment>
+                                }
+                            />
                         </FormControl>
                         <FormControl className={classes.margin}>
                             <InputLabel className={classes.labelText} htmlFor="nickName">Verify Password</InputLabel>
                             <Input
                                 id="verifyPassword"
+                                onChange={this.formFill.bind(this, 'verifyPassword')}
                                 startAdornment={
                                     <InputAdornment position="start">
                                         *
@@ -179,10 +276,12 @@ class Register extends Component {
                         <FormControl className={classes.textarea}>
                             <InputLabel className={classes.labelText} htmlFor="mission">Mission Statement</InputLabel>
                             <Input
+                                type="password"
                                 id="verifyPassword"
                                 multiline="true"
                                 maxLength="255"
                                 rowsMax="4"
+                                onChange={this.formFill.bind(this, 'missionStatement')}
                                 startAdornment={
                                     <InputAdornment position="start">
                                         
@@ -190,8 +289,10 @@ class Register extends Component {
                                 }
                             />
                         </FormControl>
-
-                        <Button variant="contained" color="primary" className={classes.login} onClick={this.logIn}>REGISTER</Button>
+                        <div className={classes.errorMessage}>
+                            <label>{err}</label>
+                        </div>
+                        <Button type="submit" variant="contained" color="primary" className={classes.login} >REGISTER</Button>
                     </form>
                     </CardContent>
                 </Card>

@@ -1,9 +1,10 @@
 import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
 import mediaJSON from '../data/streaming.js'
-import {Paper, InputAdornment, IconButton} from '@material-ui/core'
-import { withStyles, TextField } from '@material-ui/core'
+import {Paper, InputAdornment, IconButton, Button} from '@material-ui/core'
+import { withStyles, TextField, Typography } from '@material-ui/core'
 import {Search} from '@material-ui/icons';
+import 'typeface-roboto'
 
 const styles = theme => ({
     root: {
@@ -20,14 +21,15 @@ const styles = theme => ({
         margin: '10px 10px 0px 0px',
         paddingTop: 10,
         width: 230,
-        height: 180,
+        height: 165,
 
     },
     videoViews: {
         display: 'flex',
         justifyContent: 'center',
+        fontSize: 12,
         fontWeight: 500,
-        marginTop: 10,
+        marginTop: 3,
     },
     videoSpan: {
         margin: '0 20 0 20',
@@ -47,13 +49,22 @@ const styles = theme => ({
         marginTop: 10,
     },
     title: {
-        fontSize: 20,
-        fontWeight: 600,
+        fontSize:14,
+        fontWeight: 500,
     },
     wrapVideos: {
         display: 'flex',
         flexWrap: 'wrap',
-        height: 22,
+        margin: '0 0 0 20px',
+    },
+    views: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        margin: '3px 20px 0 20px',
+    },
+    searchButton: {
+        margin: '-10px 0 0 10px',
+
     }
 
   });
@@ -62,6 +73,7 @@ class Main extends Component {
 
     state = {
         videos: [],
+        search: '',
         filter: '',
     }
 
@@ -71,8 +83,44 @@ class Main extends Component {
 
     onSearch = (event) => {
         const search = event.target.value
-        this.setState({filter: search})
+        this.setState({search: search})
        
+    }
+
+    doSearch = () => {
+        const {search} = this.state
+
+        this.setState({filter: search})
+    }
+
+    truncateTitle = (title) => {
+     
+        if(title.length > 28) {
+            return title.substring(0, 28) + "..."
+        } else {
+            return title
+        }
+    }
+
+    onSubmit =  (event) => {
+        event.preventDefault()
+
+       if(this.searchDisabled()) return
+      
+        this.doSearch()
+     }
+
+    searchDisabled = () => {
+    
+        const {search} = this.state
+
+        let l = search.length
+        if(l >= 1 && l < 3) {
+            return true
+        } else {
+            return false
+        }
+        
     }
 
     render() {
@@ -87,20 +135,30 @@ class Main extends Component {
             <div className={classes.root}>
                 <div className={classes.top}>
                     <div className={classes.headerDiv}>
+                       
                         <h1>Trending</h1>
-                        <TextField 
-                            className={classes.search}
-                            id="searchVideos"
-                            label="Search"
-                            onChange={this.onSearch}
-                            InputProps={{
-                            startAdornment: (
-                                <InputAdornment position="start">
-                                    <Search />
-                                </InputAdornment>
-                            ),
-                            }}
-                        />
+                        <div>
+                        <form onSubmit={this.onSubmit}>
+                            <TextField 
+                                className={classes.search}
+                                id="searchVideos"
+                                onChange={this.onSearch}
+                                InputProps={{
+                                startAdornment: (
+                                    <InputAdornment position="start">
+                                        <Search />
+                                    </InputAdornment>
+                                ),
+                                }}
+                            />
+                          <Button size="small" 
+                                  variant="contained"
+                                  className={classes.searchButton}
+                                  color="primary"
+                                  disabled={this.searchDisabled()}
+                                  onClick={this.doSearch}>Search</Button>
+                        </form>
+                        </div>
                     </div>
                 </div>
                 <div className={classes.wrapVideos}>
@@ -124,10 +182,11 @@ class Main extends Component {
                                     </video>   
                                 </Link>
                                 <div>
-                                    <label className={classes.title}>{data.title}</label>
-                                    <div className={classes.videoViews}>
-                                        <label className="padLeft">Views: {0}</label>
-                                    </div>
+                                    <label className={classes.title}>{this.truncateTitle(data.title)}</label>
+                                    <div className={classes.views}>
+                                        <Typography variant="caption">10 Views</Typography>
+                                        <Typography variant="caption"> Last: 2018-09-14</Typography>
+                                     </div>
 
                                 </div>
                             </Paper>               

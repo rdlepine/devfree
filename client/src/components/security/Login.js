@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import { withStyles } from '@material-ui/core/styles'
-import {Card, CardHeader, CardContent, FormControl, Input, InputAdornment, InputLabel, Button, Avatar} from '@material-ui/core'
+import {Card, CardHeader, CardContent, FormControl, Input, InputAdornment, InputLabel, Button, Avatar, IconButton} from '@material-ui/core'
 import {userLogin} from '../../containers/actions';
 import {Email, Lock} from '@material-ui/icons'
 import {connect} from 'react-redux'
@@ -109,7 +109,7 @@ class Login extends Component {
                             id="password"
                             startAdornment={
                                 <InputAdornment position="start">
-                                    <i class="material-icons">lock</i>
+                                    <Lock />
                                 </InputAdornment>
                             }
                         />

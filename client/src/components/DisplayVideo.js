@@ -1,30 +1,26 @@
 import React, {Component} from 'react'
 import mediaJSON from '../data/streaming.js'
-import {Grid, Card, CardHeader, CardContent, Paper} from '@material-ui/core'
+import {Paper, Typography} from '@material-ui/core'
 import { withStyles } from '@material-ui/core'
-import IconButton from '@material-ui/core/IconButton';
-import StarBorderIcon from '@material-ui/icons/StarBorder';
-import ThumbUp from '@material-ui/icons/ThumbUp';
-import ThumbDown from '@material-ui/icons/ThumbDown';
+import IconButton from '@material-ui/core/IconButton'
+import StarBorderIcon from '@material-ui/icons/StarBorder'
+import 'typeface-roboto'
 
 const styles = theme => ({
     root: {
       display: 'flex',
       flexDirection: 'column',
-      marginTop: 80,
+      marginTop: 40,
     },
-    subheader: {
-      width: '100%',
+    description: {
+      margin: '0 40px 0 40px',
     },
     imageSpacing: {
         margin: 10,
     },
-    titleBar: {
-        position: 'absolute',
-        width: 320,
-        top: 140,
-        
-        color: '#c0c0c0',
+    title: {
+        margin: '0 0 20px 0',
+
     },
     video: {
         justifyContent: 'center',
@@ -36,12 +32,12 @@ const styles = theme => ({
     paper: {
         margin: 'auto',
         width: '70%',
-        height: '70%',
+        height: '80%',
     },
-    upOrDown: {
-        margin: '0 30px 0 10px',
-        fontSize: 28,
-        fontWeight: 500,
+    views: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        margin: '10px 40px 10px 50px',
     }
 
   });
@@ -74,7 +70,7 @@ class DisplayVideo extends Component {
         
         return (
             <div className={classes.root}>
-                <h1>{video.title}</h1>
+                <Typography variant="display1" className={classes.title}>{video.title}</Typography>
                 <Paper className={classes.paper}>
                     <video controls className={classes.video}
                         autoPlay="true"
@@ -84,11 +80,12 @@ class DisplayVideo extends Component {
                         <source src="movie.ogg" type="video/ogg" />
                         Your browser does not support the video tag.
                     </video>   
-                    <div className={classes.votes}>
-                        <ThumbUp color='action' style={{fontSize: 36}} onClick={this.voteUp} />
-                        <span className={classes.upOrDown}>{voteUp}</span>
-                        <ThumbDown color='action' style={{fontSize: 36}} onClick={this.voteDown} />
-                        <span className={classes.upOrDown}>{voteDown}</span>
+                    <Typography variant="body1" gutterBottom className={classes.description}>
+                       {video.description}
+                    </Typography>
+                    <div className={classes.views}>
+                      <Typography variant="caption">10 Views</Typography>
+                      <Typography variant="caption"> Last: 2018-09-14</Typography>
                     </div>
                 </Paper>               
             </div>
