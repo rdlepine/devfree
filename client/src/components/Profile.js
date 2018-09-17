@@ -67,7 +67,7 @@ class Profile extends Component {
         
                     <CardContent>
                          <Typography variant="display1" className={classes.message} >
-                            User Profile Goes Here
+                            User {user.firstName} Profile Goes Here
                         </Typography>
                         
                     </CardContent>

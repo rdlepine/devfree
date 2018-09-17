@@ -6,7 +6,7 @@ import {userLogout} from '../containers/actions';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import {Button, Paper, IconButton, Menu, MenuItem, MenuList} from '@material-ui/core';
+import {Button, Paper, IconButton, Menu, MenuItem} from '@material-ui/core';
 import {Person} from '@material-ui/icons'
 import flagImage from '../images/bg-header3.jpg'
 import freedomLogo from '../images/logo.png'
@@ -52,7 +52,7 @@ const styles = {
     },
     me: {
         display: 'flex',
-        width: 190,
+        width: 210,
         justifyContent: 'space-between',
         margin: '0 20px 0 20px',
     },
@@ -62,6 +62,10 @@ const styles = {
     },
     meMessage: {
         marginTop: 15,   
+    },
+    menuItem: {
+        textDecoration: 'none',
+        display: 'block',
     }
  };
 
@@ -121,8 +125,16 @@ class Header extends Component {
                                 open={Boolean(menuOpen)}
                                 onClose={this.closeMenu}
                             >
-                            <MenuItem onClick={this.handleClose}>Profile</MenuItem>
-                            <MenuItem onClick={this.handleClose}>My Videos</MenuItem>
+                            <Link to="/profile" className={classes.menuItem} >
+                                <MenuItem>
+                                    Profile
+                                </MenuItem>
+                            </Link>
+                            <Link to="/profile" className={classes.menuItem} >
+                                <MenuItem>
+                                    My Videos
+                                </MenuItem>
+                            </Link>
                             <MenuItem onClick={this.logOut}>Logout</MenuItem>
                           </Menu>
                         </div>
