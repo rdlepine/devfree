@@ -40,7 +40,7 @@ const UserSchema = new Schema({
     active: {
         type: Number,
         default: 1,
-    }    ,
+    },
     admin: {
         type: Number,
         default: 0,

@@ -1,18 +1,14 @@
 import * as myActions from '../ActionDescriptions.js'
 
-export default function user(state = {isLoggedIn: false}, action) {
+export default function user(state = {}, action) {
     switch (action.type) {
             case myActions.USER_LOGIN:
-                return {
-                    ...state,isLoggedIn: true
-                }
+                return action.user
             
             case myActions.USER_LOGOUT:
-                return {
-                  state
-                 }
+                return {}
 
             default:
-                return {isLoggedIn: false}
+                return state
     }
 }    

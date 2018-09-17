@@ -1,10 +1,13 @@
 import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
 import { withStyles } from '@material-ui/core/styles';
+import {connect} from 'react-redux'
+import {userLogout} from '../containers/actions';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import {Button, TextField, InputAdornment} from '@material-ui/core';
+import {Button, Paper, IconButton, Menu, MenuItem, MenuList} from '@material-ui/core';
+import {Person} from '@material-ui/icons'
 import flagImage from '../images/bg-header3.jpg'
 import freedomLogo from '../images/logo.png'
 import logoText from '../images/tag425.png'
@@ -46,6 +49,19 @@ const styles = {
         color: '#ffffff',
         marginTop: 0,
 
+    },
+    me: {
+        display: 'flex',
+        width: 190,
+        justifyContent: 'space-between',
+        margin: '0 20px 0 20px',
+    },
+    meMenu: {
+        fontSize: 28,
+        marginTop: -5,
+    },
+    meMessage: {
+        marginTop: 15,   
     }
  };
 
@@ -53,19 +69,25 @@ class Header extends Component {
     
 
     state = {
-        open: false,
+        menuOpen: null,
     };
 
-    showLogin = () => {
-        this.setState({open: true})
+    openMenu = (event) => {
+        this.setState({menuOpen: event.currentTarget})
     }
 
-    handleClose = () => {
-        this.setState({open: false})
+    closeMenu = () => {
+        this.setState({menuOpen: null})
+    }
+    
+    logOut = () => {
+        this.props.userLogout()
     }
     
     render() {
-        const { classes } = this.props;
+        const { classes, user } = this.props;
+        const {menuOpen} = this.state
+ 
         return (
             <AppBar position="static" className={classes.appBar}>
                <div className={classes.flagImage}>
@@ -76,10 +98,35 @@ class Header extends Component {
                     <Typography variant="title" color="inherit" className={classes.flex}>
                     </Typography>
                     <Button color="inherit" component={Link} to="/">Home</Button>
-                    <Button color="inherit" component={Link} to="/login">Login</Button>
-                    <Button color="inherit" component={Link} to="/register">Register</Button>
+                    {!user._id && (
+                        <div>
+                            <Button color="inherit" component={Link} to="/login">Login</Button>
+                            <Button color="inherit" component={Link} to="/register">Register</Button>         
+                        </div>
+                     )}
+                  
                     <Button color="inherit" component={Link} to="/contact">Contact Us</Button>
                     <Button color="inherit" component={Link} to="/about">About</Button>
+                    {user._id && (
+                        <div className={classes.me}>
+                            <Typography variant="pargraph1" color="inherit" className={classes.meMessage}>
+                                Welcome back {user.firstName}
+                            </Typography>
+                            <IconButton color="inherit" aria-label="Add an alarm" onClick={this.openMenu}>
+                                <Person className={classes.meMenu} />
+                            </IconButton>
+                            <Menu
+                                id="user-menu"
+                                anchorEl={menuOpen}
+                                open={Boolean(menuOpen)}
+                                onClose={this.closeMenu}
+                            >
+                            <MenuItem onClick={this.handleClose}>Profile</MenuItem>
+                            <MenuItem onClick={this.handleClose}>My Videos</MenuItem>
+                            <MenuItem onClick={this.logOut}>Logout</MenuItem>
+                          </Menu>
+                        </div>
+                    )}
                </Toolbar>
             </AppBar>
  
@@ -87,4 +134,18 @@ class Header extends Component {
     }
 }
 
-export default withStyles(styles)(Header)
+const mapDispatchToProps = (dispatch) => {
+    return {
+        userLogout: () => dispatch(userLogout()),
+      
+    }
+ }
+
+const mapStateToProps = (state, ownProps) => {
+    return {
+      user: state.user,
+     
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Header))

@@ -84,23 +84,28 @@ class Login extends Component {
         user: {
             email: '',
             password: '',
-            err: '',
-            toProfile: false,
-        }
+        },
+        err: '',
+        toProfile: false
     }
 
     logIn = () => {
       //  this.props.userLogin({user:{isLoggedIn:true}})  api.doRegister(this.state.user).then( (user) => {
 
         this.setState({err:''})
-        api.doLogin(this.state.user).then( (user) => {
-            if(user.err) {
-                this.setState({err: user.err})
-                return
-            } else {
-                this.setState({toProfile: true})
-            }
-        })
+        api.doLogin(this.state.user)
+            .then( (user) => {  
+                if(user.err) {
+                    console.log(user.err)
+                    this.setState({err: user.err})
+                    return
+                } else {
+                    this.props.userLogin(user.user)
+                    localStorage.setItem('freedomToken', user.token)
+                    this.setState({toProfile: true})
+                }
+            })
+            .catch((err) => console.log(err))
     }
 
     formFill(property, event) {
@@ -179,7 +184,6 @@ const mapDispatchToProps = (dispatch) => {
       
     }
  }
-
 
 const mapStateToProps = (state, ownProps) => {
     return {

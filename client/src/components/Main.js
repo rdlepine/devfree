@@ -21,7 +21,7 @@ const styles = theme => ({
         margin: '10px 10px 0px 0px',
         paddingTop: 10,
         width: 230,
-        height: 165,
+        height: 190,
 
     },
     videoViews: {
@@ -65,6 +65,9 @@ const styles = theme => ({
     searchButton: {
         margin: '-10px 0 0 10px',
 
+    },
+    pageName: {
+        margin: '3px 0 6px 0',
     }
 
   });
@@ -164,6 +167,9 @@ class Main extends Component {
                 <div className={classes.wrapVideos}>
                     {fvideos.map( (data, index) => (
                            <Paper className={classes.card}>
+                                <Typography variant="paragraph3" className={classes.pageName}>
+                                    Page Name goes here
+                                </Typography>
                                 <Link to={{
                                     pathname: '/video',
                                     state: {

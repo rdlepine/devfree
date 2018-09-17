@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import { withStyles } from '@material-ui/core/styles'
 import {Card, CardContent, Button, Typography} from '@material-ui/core'
 import {Redirect} from 'react-router-dom'
+import {connect} from 'react-redux'
 
 const styles = {
     card: {
@@ -54,9 +55,9 @@ class Profile extends Component {
     render () {
     
         const {classes} = this.props
-        const {toLogin} = this.state
+        const {user} = this.props
 
-        if(toLogin) {
+        if(!user._id) {
             return <Redirect to="/login" />
         }
 
@@ -65,7 +66,7 @@ class Profile extends Component {
                   <Card className={classes.card}>
         
                     <CardContent>
-                         <Typography variant="diplsy3" className={classes.message} >
+                         <Typography variant="display1" className={classes.message} >
                             User Profile Goes Here
                         </Typography>
                         
@@ -78,4 +79,18 @@ class Profile extends Component {
 
 }
 
-export default withStyles(styles)(Profile)
+// const mapDispatchToProps = (dispatch) => {
+//     return {
+//         userLogin: (user) => dispatch(userLogin(user)),
+      
+//     }
+//  }
+
+const mapStateToProps = (state, ownProps) => {
+    return {
+      user: state.user,
+     
+    }
+}
+
+export default connect(mapStateToProps)(withStyles(styles)(Profile))

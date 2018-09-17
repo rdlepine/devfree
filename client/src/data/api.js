@@ -12,7 +12,6 @@ const headers = {
 }
 
 export const doRegister = (user) => {
-    console.log(`${api}/users/register`)
     return fetch(`${api}/users/register`, {
         method: 'POST',
         headers: {
@@ -29,7 +28,6 @@ export const doRegister = (user) => {
 }
 
 export const doLogin = (user) => {
- 
   return fetch(`${api}/users/login`, {
       method: 'POST',
       headers: {
@@ -37,12 +35,14 @@ export const doLogin = (user) => {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(user)
-    }).then(res => res.json())
+    }).then(res => {
+         return res.json()
+       }
+      )
       .then( data => {
-        console.log(data)
         return data
       })
-      .catch( (err) => console.log(err))
+      .catch( (err) => console.log("Err", err))
 }
 
 export const getAll = () => 
