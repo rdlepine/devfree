@@ -127,6 +127,9 @@ class Register extends Component {
         this.setState({err:''})
         const {user, err} = this.state
 
+
+       
+
         if(user.password !== user.verifyPassword) {
             this.setState({err:'Passwords do Not match'})
             return
@@ -143,6 +146,10 @@ class Register extends Component {
 
 
         api.doRegister(this.state.user).then( (user) => {
+            if(user.email === 'Email Already Exists') {
+                this.setState({err:'Account Exists'})
+                return
+            }
             this.setState({err: user.email})
             this.setState({toSuccess: true})
         })
@@ -263,6 +270,7 @@ class Register extends Component {
                         <FormControl className={classes.margin}>
                             <InputLabel className={classes.labelText} htmlFor="nickName">Verify Password</InputLabel>
                             <Input
+                                type="password"
                                 id="verifyPassword"
                                 onChange={this.formFill.bind(this, 'verifyPassword')}
                                 startAdornment={

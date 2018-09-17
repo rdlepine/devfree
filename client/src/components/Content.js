@@ -6,6 +6,7 @@ import Main from './Main'
 import DisplayVideo from './DisplayVideo'
 import About from './About'
 import Success from './Success'
+import Profile from './Profile'
 
 
 
@@ -20,7 +21,8 @@ class Content extends Component {
                 <Route path='/register' component={Register}/>
                 <Route path='/video' component={DisplayVideo} />
                 <Route path='/about' component={About} />
-                <Route path='/Success' component={Success} />
+                <Route path='/success' component={Success} />
+                <Route path='/profile' component={Profile} />
             </RouterSwitch>
            </div>
         )

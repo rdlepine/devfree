@@ -1,10 +1,12 @@
 import React, {Component} from 'react'
+import {Redirect} from 'react-router-dom'
 import { withStyles } from '@material-ui/core/styles'
 import {Card, CardHeader, CardContent, FormControl, Input, InputAdornment, InputLabel, Button, Avatar, IconButton} from '@material-ui/core'
 import {userLogin} from '../../containers/actions';
 import {Email, Lock} from '@material-ui/icons'
 import {connect} from 'react-redux'
 import logo from '../../images/logo.png'
+import * as api from '../../data/api.js'
 
 const styles = {
     card: {
@@ -46,7 +48,7 @@ const styles = {
     logo: {
         width: 280,
         height: 80,
-        marginTop: 40,
+        marginTop: 30,
     },
     headerIcon: {
         background: "transparent",
@@ -63,22 +65,62 @@ const styles = {
         fontWeight: 600,
     },
     buttonLink: {
-        marginTop: 15,
+        marginTop: 10,
         textDecoration: "none",
         color: '#304FFE',
+    },
+    errorMessage: {
+        fontSize: 18,
+        marginTop: 10,
+        color: 'red',
+
     },
    
   };
 
 class Login extends Component {
-
-    logIn = (user) => {
-        this.props.userLogin({user:{isLoggedIn:true}})
+ 
+    state = {
+        user: {
+            email: '',
+            password: '',
+            err: '',
+            toProfile: false,
+        }
     }
+
+    logIn = () => {
+      //  this.props.userLogin({user:{isLoggedIn:true}})  api.doRegister(this.state.user).then( (user) => {
+
+        this.setState({err:''})
+        api.doLogin(this.state.user).then( (user) => {
+            if(user.err) {
+                this.setState({err: user.err})
+                return
+            } else {
+                this.setState({toProfile: true})
+            }
+        })
+    }
+
+    formFill(property, event) {
+    
+        let {user} = this.state
+        user[property] = event.target.value
+ 
+        this.setState({user:user})
+     
+ 
+     }
 
     render () {
     
         const {classes} = this.props
+        const {err, toProfile} = this.state
+
+        if(toProfile) {
+            return <Redirect to="profile" />
+        }
 
         return (
             <div>
@@ -95,6 +137,7 @@ class Login extends Component {
                     <FormControl className={classes.margin}>
                         <InputLabel className={classes.labelText} htmlFor="email">Email</InputLabel>
                         <Input
+                            onChange={this.formFill.bind(this, 'email')}
                             id="email"
                             startAdornment={
                                 <InputAdornment position="start">
@@ -107,15 +150,20 @@ class Login extends Component {
                         <InputLabel className={classes.labelText} htmlFor="password">Password</InputLabel>
                         <Input
                             id="password"
+                            onChange={this.formFill.bind(this, 'password')}
                             startAdornment={
                                 <InputAdornment position="start">
                                     <Lock />
                                 </InputAdornment>
                             }
                         />
+                        <div className={classes.errorMessage}>
+                            <label>{err}</label>
+                        </div>
                         <Button variant="contained" color="primary" className={classes.login} onClick={this.logIn}>LOGIN</Button>
                         <a href="" className={classes.buttonLink}>Reset Password</a>
                      </FormControl>
+        
                     </CardContent>
 
                 </Card>

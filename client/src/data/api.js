@@ -1,5 +1,5 @@
-const api = "http://localhost:5000/api"
-
+const api = "http://simplesemisolutions.com:5000/api"
+//const api = "http://localhost:5000/api"
 
 // Generate a unique token for storing your bookshelf data on the backend server.
 let token = localStorage.token
@@ -26,6 +26,23 @@ export const doRegister = (user) => {
           return data
         })
         .catch( (err) => console.log(err))
+}
+
+export const doLogin = (user) => {
+ 
+  return fetch(`${api}/users/login`, {
+      method: 'POST',
+      headers: {
+        ...headers,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(user)
+    }).then(res => res.json())
+      .then( data => {
+        console.log(data)
+        return data
+      })
+      .catch( (err) => console.log(err))
 }
 
 export const getAll = () => 

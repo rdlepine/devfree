@@ -53,13 +53,14 @@ router.post('/register', (req, res) => {
 //@access Public
 
 router.post('/login', (req, res) => {
-    const {email, password} = req.body
 
+    const {email, password} = req.body
+    console.log(email)
     //Find user by email
     User.findOne({email: email})
         .then((user) => {
             if(!user) {
-                return res.status(404).json({email: 'User Not Found'})
+                return res.status(404).json({err: 'User Not Found'})
             }
             //Check Password
             bcrypt.compare(password, user.password)
@@ -69,10 +70,9 @@ router.post('/login', (req, res) => {
                         //Sign token
                         const payload = {
                             id: user._id,
-                            name: user.name,
+                            name: user.firstName,
                             avatar: user.avatar
                         }
-                //        console.log(keys)
                         jwt.sign(payload, keys.secretOrKey, {expiresIn: 3600}, (err, token) => {
                             if(err) {
                                 return res.status(400).json({err:err})
@@ -83,7 +83,7 @@ router.post('/login', (req, res) => {
                             })
                         })
                       } else {
-                        return res.status(400).json({password:'Invalid Email and or Password'})
+                        return res.status(400).json({err:'Invalid Email and or Password'})
                       }
                   })
         })
