@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import mediaJSON from '../data/streaming.js'
 import {Paper, Typography} from '@material-ui/core'
+import Video from './Video'
 import { withStyles } from '@material-ui/core'
 import IconButton from '@material-ui/core/IconButton'
 import StarBorderIcon from '@material-ui/icons/StarBorder'
@@ -48,12 +49,19 @@ class DisplayVideo extends Component {
         video: {},
         voteUp: 0,
         voteDown: 0,
+        videos: [],
     }
 
     componentDidMount () {
         const {video} = this.props.location.state
 
         this.setState({video: video})
+
+        const videos = mediaJSON.categories[0].videos.filter((data) =>  {
+                return data.pageName === video.pageName
+         })
+
+        this.setState({videos: videos})
     }
 
     voteUp = () => {
@@ -65,29 +73,41 @@ class DisplayVideo extends Component {
     }
 
     render() {
-        const {video, voteUp, voteDown} = this.state
+        const {video, videos, voteUp, voteDown} = this.state
         const {classes} = this.props
         
         return (
-            <div className={classes.root}>
-                <Typography variant="display1" className={classes.title}>{video.title}</Typography>
-                <Paper className={classes.paper}>
-                    <video controls className={classes.video}
-                        autoPlay="true"
-                        preload="metadata"
-                    >
-                        <source src={video.sources + "#t=5"} type="video/mp4" />
-                        <source src="movie.ogg" type="video/ogg" />
-                        Your browser does not support the video tag.
-                    </video>   
-                    <Typography variant="body1" gutterBottom className={classes.description}>
-                       {video.description}
+            <div>
+                <div className={classes.root}>
+                    <Typography variant="display1" className={classes.title}>{video.title}</Typography>
+                    <Paper className={classes.paper}>
+                        <video controls className={classes.video}
+                            autoPlay="true"
+                            preload="metadata"
+                        >
+                            <source src={video.sources + "#t=5"} type="video/mp4" />
+                            <source src="movie.ogg" type="video/ogg" />
+                            Your browser does not support the video tag.
+                        </video>   
+                        <Typography variant="body1" gutterBottom className={classes.description}>
+                        {video.description}
+                        </Typography>
+                        <div className={classes.views}>
+                        <Typography variant="caption">10 Views</Typography>
+                        <Typography variant="caption"> Last: 2018-09-14</Typography>
+                        </div>
+                    </Paper>               
+                </div>
+                <div>
+                    <Typography variant="display1" className={classes.title}>
+                        More From {video.pageName}
                     </Typography>
-                    <div className={classes.views}>
-                      <Typography variant="caption">10 Views</Typography>
-                      <Typography variant="caption"> Last: 2018-09-14</Typography>
-                    </div>
-                </Paper>               
+                    {
+                        videos.map( (data, index) => {
+                            <Video key={index} video={data} />
+                        })
+                    }
+                </div>
             </div>
         )
     }

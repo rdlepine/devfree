@@ -155,6 +155,7 @@ class Login extends Component {
                         <InputLabel className={classes.labelText} htmlFor="password">Password</InputLabel>
                         <Input
                             id="password"
+                            type="password"
                             onChange={this.formFill.bind(this, 'password')}
                             startAdornment={
                                 <InputAdornment position="start">

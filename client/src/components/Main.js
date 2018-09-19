@@ -166,7 +166,7 @@ class Main extends Component {
                     {fvideos.map( (data, index) => (
                            <Paper className={classes.card}>
                                 <Typography variant="body1" className={classes.pageName}>
-                                    Page Name goes here
+                                    {data.pageName}
                                 </Typography>
                                 <Link to={{
                                     pathname: '/video',
@@ -188,8 +188,8 @@ class Main extends Component {
                                 <div>
                                     <label className={classes.title}>{this.truncateTitle(data.title)}</label>
                                     <div className={classes.views}>
-                                        <Typography variant="caption">10 Views</Typography>
-                                        <Typography variant="caption"> Last: 2018-09-14</Typography>
+                                        <Typography variant="caption">Views: {data.views}</Typography>
+                                        <Typography variant="caption">Last Viewed: {data.lastViewed}</Typography>
                                      </div>
 
                                 </div>

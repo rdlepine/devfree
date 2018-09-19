@@ -1,13 +1,16 @@
 import React, {Component} from 'react'
 import {Redirect} from 'react-router-dom'
 import { withStyles } from '@material-ui/core/styles'
-import {Card, CardHeader, CardContent, Paper, FormControl, Input, InputAdornment, InputLabel, Button, Avatar, IconButton, Typography} from '@material-ui/core'
+import {Card, CardHeader, CardContent, FormControl, Input, InputAdornment, InputLabel, Button, Avatar, IconButton, Typography} from '@material-ui/core'
 import {userLogin} from '../containers/actions';
-import {Email, Lock, Videocam} from '@material-ui/icons'
+import {Email, Lock, Videocam, CloudUpload} from '@material-ui/icons'
+import Video from './Video'
+import Upload from './Upload'
 import {connect} from 'react-redux'
 import logo from '../images/logo.png'
 import 'typeface-roboto'
 import * as api from '../data/api.js'
+import mediaJSON from '../data/streaming.js'
 
 const styles = {
     card: {
@@ -18,24 +21,18 @@ const styles = {
         bottom: 0,
         margin: 'auto',
         marginTop: 100,
-        height: 440,
+        marginBottom: 20,
+        maxHeight: '100%',
+        overflow: 'auto',
         width: 750,
         background: "#ffffff",
-    },
-    login: {
-        marginTop: 30,
     },
     media: {
       height: 0,
       paddingTop: '56.25%', // 16:9
     },
-    title: {
-        fontWeight: 500,
-        marginBottom: 40,
-        textColor: 'linear-gradient(to top, #1e3c72 0%, #1e3c72 1%, #2a5298 100%)',
-    },
-    margin: {
-        marginTop: 1,
+      margin: {
+      marginTop: 1,
        
     },
     header: {
@@ -79,9 +76,23 @@ const styles = {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
-        marginBottom: 30,
+
+        margin: 'auto auto 30 auto',
         width: 300,
-      
+        margin: 'auto',
+    },
+    allVideos: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+    },
+    video: {
+        justifyContent: 'center',
+        margin: 'auto',
+       
+    },
+    leftIcon: {
+        margin: '0 5px 0 5px',
     }
     
    
@@ -91,6 +102,7 @@ class Videos extends Component {
  
     state = {
         uploadVisible: true,
+        videos: [],
     }
 
   
@@ -110,12 +122,13 @@ class Videos extends Component {
 
      componentDidMount() {
          this.setState({uploadVisible: true})
+         this.setState({videos: mediaJSON.categories[0].videos})
      }
 
     render () {
     
         const {classes, user} = this.props
-        const {err, uploadVisible} = this.state
+        const {err, uploadVisible, videos} = this.state
 
         return (
             <div>
@@ -127,49 +140,31 @@ class Videos extends Component {
                         </Avatar>
                         }
                     />    
-                    <CardContent>
+                    <CardContent className={classes.allVideos}>
                         <Typography variant="display1" className={classes.title}>
                             MY VIDEOS
                         </Typography>
-                        <Button color="primary" onClick={this.toggleUpload} className={classes.btnMargin}>Upload Video</Button>
+                        <Button color="primary" onClick={this.toggleUpload} className={classes.btnMargin}>
+                            <CloudUpload className={classes.leftIcon} />
+                            Upload Video
+                        </Button>
                         <div hidden={uploadVisible}  >
-                            <form  onSubmit={this.onSubmit} className={classes.uploadDiv}>
-                                <FormControl className={classes.margin}>
-                                    <InputLabel className={classes.labelText} htmlFor="videoTitle">Title</InputLabel>
-                                    <Input required
-                                        id="videoTitle"
-                                        onChange={this.formFill.bind(this, 'videoTitle')}
-                                        startAdornment={
-                                            <InputAdornment position="start"> 
-                                            *
-                                            </InputAdornment>
-                                        }
-                                    />
-                                    </FormControl>
-                                    <FormControl className={classes.textarea}>
-                                        <InputLabel className={classes.labelText} htmlFor="descripttion">Description</InputLabel>
-                                        <Input
-                                            id="verifyPassword"
-                                            multiline="true"
-                                            maxLength="255"
-                                            rowsMax="4"
-                                            onChange={this.formFill.bind(this, 'description')}
-                                            startAdornment={
-                                                <InputAdornment position="start">
-                                                    
-                                                </InputAdornment>
-                                            }
-                                        />
-                                    </FormControl>
-                                  
-                            </form>
+                            <Upload />
                         </div>
-                        {user.videos === undefined || user.videos.length === 0?
+                        {videos === undefined || videos.length === 0?
                                 <Typography variant="subheading">
                                     You have no videos
                                 </Typography>
                             :
-                            <h4>some videos</h4>
+                            <div className={classes.video}>
+                                {
+                                    videos.map((video) => {
+                                        return (
+                                            <Video video={video}/>
+                                        )
+                                    })
+                                }
+                            </div>
                         }
                     </CardContent>
                 </Card>
