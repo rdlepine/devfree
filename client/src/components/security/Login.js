@@ -124,7 +124,7 @@ class Login extends Component {
         const {err, toProfile} = this.state
 
         if(toProfile) {
-            return <Redirect to="profile" />
+            return <Redirect to="/" />
         }
 
         return (

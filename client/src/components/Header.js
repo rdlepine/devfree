@@ -73,7 +73,7 @@ class Header extends Component {
     
 
     state = {
-        menuOpen: null,
+        menuOpen: false,
     };
 
     openMenu = (event) => {
@@ -86,6 +86,10 @@ class Header extends Component {
     
     logOut = () => {
         this.props.userLogout()
+    }
+
+    componentDidMount() {
+        this.setState({menuOpen: false})
     }
     
     render() {
@@ -130,7 +134,7 @@ class Header extends Component {
                                     Profile
                                 </MenuItem>
                             </Link>
-                            <Link to="/profile" className={classes.menuItem} >
+                            <Link to="/videos" className={classes.menuItem} >
                                 <MenuItem>
                                     My Videos
                                 </MenuItem>

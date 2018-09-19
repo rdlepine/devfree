@@ -4,6 +4,7 @@ import Login from './security/Login'
 import Register from './security/Register'
 import Main from './Main'
 import DisplayVideo from './DisplayVideo'
+import Videos from './Videos'
 import About from './About'
 import Success from './Success'
 import Profile from './Profile'
@@ -17,12 +18,13 @@ class Content extends Component {
            <div>
             <RouterSwitch>
                 <Route exact path='/' component={Main}/>
-                <Route path='/login' component={Login}/>
-                <Route path='/register' component={Register}/>
-                <Route path='/video' component={DisplayVideo} />
-                <Route path='/about' component={About} />
-                <Route path='/success' component={Success} />
-                <Route path='/profile' component={Profile} />
+                <Route exact path='/login' component={Login}/>
+                <Route exact path='/register' component={Register}/>
+                <Route exact path='/video' component={DisplayVideo} />
+                <Route exact path='/about' component={About} />
+                <Route exact path='/success' component={Success} />
+                <Route exact path='/profile' component={Profile} />
+                <Route exact path='/videos' component={Videos} />
             </RouterSwitch>
            </div>
         )

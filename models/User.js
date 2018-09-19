@@ -44,6 +44,9 @@ const UserSchema = new Schema({
     admin: {
         type: Number,
         default: 0,
+    },
+    videos: {
+        
     }
 })
 

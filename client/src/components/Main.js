@@ -63,11 +63,15 @@ const styles = theme => ({
         margin: '3px 20px 0 20px',
     },
     searchButton: {
-        margin: '-10px 0 0 10px',
-
+        margin: '0 0 0 10px',
+        height: 10,
+        width: 10,
     },
     pageName: {
         margin: '3px 0 6px 0',
+    },
+    searchIcon: {
+        fontSize: 28,
     }
 
   });
@@ -139,27 +143,21 @@ class Main extends Component {
                 <div className={classes.top}>
                     <div className={classes.headerDiv}>
                        
-                        <h1>Trending</h1>
+                        <h1>Latest</h1>
                         <div>
                         <form onSubmit={this.onSubmit}>
                             <TextField 
                                 className={classes.search}
                                 id="searchVideos"
                                 onChange={this.onSearch}
-                                InputProps={{
-                                startAdornment: (
-                                    <InputAdornment position="start">
-                                        <Search />
-                                    </InputAdornment>
-                                ),
-                                }}
                             />
-                          <Button size="small" 
-                                  variant="contained"
-                                  className={classes.searchButton}
-                                  color="primary"
-                                  disabled={this.searchDisabled()}
-                                  onClick={this.doSearch}>Search</Button>
+                            <IconButton      
+                                color="pirmary"
+                                className={classes.searchButton}
+                                disabled={this.searchDisabled()}
+                                onClick={this.doSearch}>
+                                    <Search color="primary" className={classes.searchIcon}/>
+                            </IconButton>
                         </form>
                         </div>
                     </div>
@@ -167,7 +165,7 @@ class Main extends Component {
                 <div className={classes.wrapVideos}>
                     {fvideos.map( (data, index) => (
                            <Paper className={classes.card}>
-                                <Typography variant="paragraph3" className={classes.pageName}>
+                                <Typography variant="body1" className={classes.pageName}>
                                     Page Name goes here
                                 </Typography>
                                 <Link to={{
