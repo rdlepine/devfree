@@ -129,17 +129,17 @@ class Header extends Component {
                                 open={Boolean(menuOpen)}
                                 onClose={this.closeMenu}
                             >
-                            <Link to="/profile" className={classes.menuItem} >
+                            <Link to="/profile" onClick={this.closeMenu} className={classes.menuItem} >
                                 <MenuItem>
                                     Profile
                                 </MenuItem>
                             </Link>
-                            <Link to="/videos" className={classes.menuItem} >
+                            <Link to="/videos" onClick={this.closeMenu} className={classes.menuItem} >
                                 <MenuItem>
                                     My Videos
                                 </MenuItem>
                             </Link>
-                            <MenuItem onClick={this.logOut}>Logout</MenuItem>
+                                <MenuItem onClick={this.logOut}>Logout</MenuItem>
                           </Menu>
                         </div>
                     )}

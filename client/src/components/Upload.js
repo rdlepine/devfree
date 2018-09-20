@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import {Paper, Button, FormControl, withStyles, Input, InputAdornment, InputLabel} from '@material-ui/core'
+import {connect} from 'react-redux'
 
 const styles = {
 
@@ -116,4 +117,18 @@ class Upload extends Component {
 
 }
 
-export default withStyles(styles)(Upload)
+const mapDispatchToProps = (dispatch) => {
+    // return {
+    //     userLogin: (user) => dispatch(userLogin(user)),
+      
+    // }
+ }
+
+const mapStateToProps = (state, ownProps) => {
+    return {
+      user: state.user,
+     
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Upload))
