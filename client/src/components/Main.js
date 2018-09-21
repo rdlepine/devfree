@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
 import mediaJSON from '../data/streaming.js'
-import {Paper, InputAdornment, IconButton, Button} from '@material-ui/core'
+import {Paper, IconButton} from '@material-ui/core'
 import { withStyles, TextField, Typography } from '@material-ui/core'
 import {Search} from '@material-ui/icons';
 import 'typeface-roboto'
@@ -152,7 +152,7 @@ class Main extends Component {
                                 onChange={this.onSearch}
                             />
                             <IconButton      
-                                color="pirmary"
+                                color="primary"
                                 className={classes.searchButton}
                                 disabled={this.searchDisabled()}
                                 onClick={this.doSearch}>
@@ -164,7 +164,7 @@ class Main extends Component {
                 </div>
                 <div className={classes.wrapVideos}>
                     {fvideos.map( (data, index) => (
-                           <Paper className={classes.card}>
+                           <Paper key={index} className={classes.card}>
                                 <Typography variant="body1" className={classes.pageName}>
                                     {data.pageName}
                                 </Typography>

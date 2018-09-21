@@ -5,30 +5,10 @@ export const IS_LOGGED_IN = 'IS_LOGGED_IN'
 export const USER_LOGIN = 'USER_LOGIN'
 export const USER_LOGOUT = 'USER_LOGOUT'
 
-//DRIVERS
-export const GET_DRIVERS = 'GET_DRIVERS'
-export const ADD_DRIVER = 'ADD_DRIVER'
-export const UPDATE_DRIVER = 'UPDATE_DRIVER'
-export const REMOVE_DRIVER = 'REMOVE_DRIVER'
+//VIDEOS
+export const GET_VIDEOS = 'GET_VIDEOS'
+export const ADD_VIDEO = 'ADD_VIDEO'
+export const UPDATE_VIDEO = 'UPDATE_VIDEO'
+export const REMOVE_VIDEO = 'REMOVE_VIDEO'
 
-//EMPLOYEES
-export const GET_EMPLOYEES = 'GET_DRIVERS'
-export const ADD_EMPLOYEE = 'ADD_DRIVER'
-export const UPDATE_EMPLOYEE = 'UPDATE_DRIVER'
-export const DELETE_EMPLOYEE  = 'REMOVE_DRIVER'
 
-//CUSTOMERS
-export const GET_CUSTOMERS = 'GET_DRIVERS'
-export const ADD_CUSTOMER = 'ADD_DRIVER'
-export const UPDATE_CUSTOMER = 'UPDATE_DRIVER'
-export const DELETE_CUSTOMER  = 'REMOVE_DRIVER'
-
-//ROUTES
-export const GET_ROUTES = 'GET_DRIVERS'
-export const ADD_ROUTE = 'ADD_DRIVER'
-export const UPDATE_ROUTE = 'UPDATE_DRIVER'
-export const DELETE_ROUTE  = 'REMOVE_DRIVER'
-
-//DISPATCHES
-
-//ARCHIVES

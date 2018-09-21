@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {Redirect} from 'react-router-dom'
 import { withStyles } from '@material-ui/core/styles'
-import {Card, CardHeader, CardContent, FormControl, Input, InputAdornment, InputLabel, Button, Avatar, IconButton} from '@material-ui/core'
+import {Card, CardHeader, CardContent, FormControl, Input, InputAdornment, InputLabel, Button, Avatar} from '@material-ui/core'
 import {userLogin} from '../../containers/actions';
 import {Email, Lock} from '@material-ui/icons'
 import {connect} from 'react-redux'
@@ -139,37 +139,38 @@ class Login extends Component {
                     />    
                     <CardContent>
                     <img className={classes.logo} src={logo} alt="freedoms Bell" />
-                    <FormControl className={classes.margin}>
-                        <InputLabel className={classes.labelText} htmlFor="email">Email</InputLabel>
-                        <Input
-                            onChange={this.formFill.bind(this, 'email')}
-                            id="email"
-                            startAdornment={
-                                <InputAdornment position="start">
-                                    <Email />
-                                </InputAdornment>
-                            }
-                        />
-                    </FormControl>
-                    <FormControl className={classes.margin}>
-                        <InputLabel className={classes.labelText} htmlFor="password">Password</InputLabel>
-                        <Input
-                            id="password"
-                            type="password"
-                            onChange={this.formFill.bind(this, 'password')}
-                            startAdornment={
-                                <InputAdornment position="start">
-                                    <Lock />
-                                </InputAdornment>
-                            }
-                        />
-                        <div className={classes.errorMessage}>
-                            <label>{err}</label>
-                        </div>
-                        <Button variant="contained" color="primary" className={classes.login} onClick={this.logIn}>LOGIN</Button>
-                        <a href="" className={classes.buttonLink}>Reset Password</a>
-                     </FormControl>
-        
+                    <form>
+                        <FormControl className={classes.margin}>
+                            <InputLabel className={classes.labelText} htmlFor="email">Email</InputLabel>
+                            <Input
+                                onChange={this.formFill.bind(this, 'email')}
+                                id="email"
+                                startAdornment={
+                                    <InputAdornment position="start">
+                                        <Email />
+                                    </InputAdornment>
+                                }
+                            />
+                        </FormControl>
+                        <FormControl className={classes.margin}>
+                            <InputLabel className={classes.labelText} htmlFor="password">Password</InputLabel>
+                            <Input
+                                id="password"
+                                type="password"
+                                onChange={this.formFill.bind(this, 'password')}
+                                startAdornment={
+                                    <InputAdornment position="start">
+                                        <Lock />
+                                    </InputAdornment>
+                                }
+                            />
+                            <div className={classes.errorMessage}>
+                                <label>{err}</label>
+                            </div>
+                            <Button variant="contained" color="primary" className={classes.login} onClick={this.logIn}>LOGIN</Button>
+                            <a href="" className={classes.buttonLink}>Reset Password</a>
+                        </FormControl>
+                      </form>
                     </CardContent>
 
                 </Card>

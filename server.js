@@ -7,6 +7,7 @@ const numCPUs = require('os').cpus().length;
 const users = require('./routes/api/users')
 const profile= require('./routes/api/profile')
 const posts = require('./routes/api/posts')
+const videos = require('./routes/api/videos')
 const cors = require('cors')
 
 
@@ -27,7 +28,7 @@ if (cluster.isMaster) {
     app.use(cors())
     //Body Parser
     app.use(bodyParser.urlencoded({extended:false}))
-    app.use(bodyParser.json())
+    app.use(bodyParser.json({limit: '200mb'}))
 
     //DB Config
     const db = require('./config/keys').mongoURI
@@ -50,6 +51,7 @@ if (cluster.isMaster) {
     app.use('/api/users', users)
     app.use('/api/profile', profile)
     app.use('/api/posts', posts)
+    app.use('/api/videos', videos)
 
     const port = process.env.PORT || 5000
 

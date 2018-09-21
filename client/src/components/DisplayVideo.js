@@ -3,8 +3,6 @@ import mediaJSON from '../data/streaming.js'
 import {Paper, Typography} from '@material-ui/core'
 import Video from './Video'
 import { withStyles } from '@material-ui/core'
-import IconButton from '@material-ui/core/IconButton'
-import StarBorderIcon from '@material-ui/icons/StarBorder'
 import 'typeface-roboto'
 
 const styles = theme => ({
@@ -104,7 +102,7 @@ class DisplayVideo extends Component {
                     </Typography>
                     {
                         videos.map( (data, index) => {
-                            <Video key={index} video={data} />
+                            return <Video key={index} video={data} />
                         })
                     }
                 </div>

@@ -220,7 +220,7 @@ class Register extends Component {
                                 required
                                 id="lastName"
                                 onChange={this.formFill.bind(this, 'lastName')}
-                                inputType="email"
+                                type="email"
                                 startAdornment={
                                     <InputAdornment position="start">
                                         *
@@ -248,7 +248,7 @@ class Register extends Component {
                                 onChange={this.formFill.bind(this, 'pageName')}
                                 startAdornment={
                                     <InputAdornment position="start">
-                                        
+                                        &nbsp;
                                     </InputAdornment>
                                 }
                             />
@@ -259,6 +259,7 @@ class Register extends Component {
                             <InputLabel className={classes.labelText} htmlFor="password">Password</InputLabel>
                             <Input type="password"
                                 required
+                                id="password"
                                 onChange={this.formFill.bind(this, 'password')}
                                 startAdornment={
                                     <InputAdornment position="start">
@@ -285,14 +286,14 @@ class Register extends Component {
                             <InputLabel className={classes.labelText} htmlFor="mission">Mission Statement</InputLabel>
                             <Input
                                 type="password"
-                                id="verifyPassword"
-                                multiline="true"
+                                id="missionStatement"
+                                multiline
                                 maxLength="255"
                                 rowsMax="4"
                                 onChange={this.formFill.bind(this, 'missionStatement')}
                                 startAdornment={
                                     <InputAdornment position="start">
-                                        
+                                       &npsp;
                                     </InputAdornment>
                                 }
                             />

@@ -5,7 +5,6 @@ import {Card, CardHeader, CardContent, FormControl, Input, InputAdornment, Input
 import {userLogin} from '../containers/actions';
 import {Person} from '@material-ui/icons'
 import {connect} from 'react-redux'
-import logo from '../images/logo.png'
 import * as api from '../data/api.js'
 
 const styles = {
@@ -125,7 +124,7 @@ class Profile extends Component {
     register = () => {
 
         this.setState({err:''})
-        const {user, err} = this.state
+        const {user} = this.state
              
 
         if(user.password !== user.verifyPassword) {
@@ -226,7 +225,7 @@ class Profile extends Component {
                                 value={user.lastName}
                                 id="lastName"
                                 onChange={this.formFill.bind(this, 'lastName')}
-                                inputType="email"
+                                type="email"
                                 startAdornment={
                                     <InputAdornment position="start">
                                         *

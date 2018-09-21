@@ -1,11 +1,10 @@
-import * as myActions from '../ActionDescriptions.js'
 import {combineReducers} from 'redux'
 import user from './user'
-import drivers from './drivers'
+import videos from './videos'
 
 const rootReducer = combineReducers( {
     user,
-    drivers,
+    videos,
 })
 
 export default rootReducer

@@ -6,7 +6,7 @@ import {userLogout} from '../containers/actions';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import {Button, Paper, IconButton, Menu, MenuItem} from '@material-ui/core';
+import {Button, IconButton, Menu, MenuItem} from '@material-ui/core';
 import {Person} from '@material-ui/icons'
 import flagImage from '../images/bg-header3.jpg'
 import freedomLogo from '../images/logo.png'
@@ -117,15 +117,19 @@ class Header extends Component {
                     <Button color="inherit" component={Link} to="/about">About</Button>
                     {user._id && (
                         <div className={classes.me}>
-                            <Typography variant="pargraph1" color="inherit" className={classes.meMessage}>
+                            <Typography variant="body2" color="inherit" className={classes.meMessage}>
                                 Welcome back {user.firstName}
                             </Typography>
-                            <IconButton color="inherit" aria-label="Add an alarm" onClick={this.openMenu}>
+                            <IconButton color="inherit" aria-label="Add an alarm" onClick={this.openMenu}
+                                        buttonRef={node => {
+                                            this.anchorEl = node;
+                                        }}
+                            >
                                 <Person className={classes.meMenu} />
                             </IconButton>
                             <Menu
                                 id="user-menu"
-                                anchorEl={menuOpen}
+                                anchorEl={this.anchorEl}
                                 open={Boolean(menuOpen)}
                                 onClose={this.closeMenu}
                             >

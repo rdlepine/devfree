@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import { withStyles } from '@material-ui/core/styles'
 import {Card, CardContent, Button, Typography} from '@material-ui/core'
-import {Email, Lock} from '@material-ui/icons'
 import logo from '../images/logo.png'
 import {Redirect} from 'react-router-dom'
 

@@ -1,5 +1,7 @@
 import React, {Component} from 'react'
-import {Paper, Button, FormControl, withStyles, Input, InputAdornment, InputLabel} from '@material-ui/core'
+import {Paper, Button, FormControl, withStyles, Input, InputAdornment, InputLabel, CircularProgress} from '@material-ui/core'
+import green from '@material-ui/core/colors/green';
+import {postVideo} from '../containers/actions'
 import {connect} from 'react-redux'
 
 const styles = {
@@ -38,29 +40,79 @@ const styles = {
         width: 300,
         margin: 'auto',
     },
+    fileProgress: {
+        color: green[500],
+        marginLeft: -150,
+        marginTop: -5,
+        zIndex: 1,
+    },
+    chooseFile: {
+        display: 'flex',
+    }
   }
 
 class Upload extends Component {
 
     state = {
-        user: {
+        fileLoading: false,
+        uploadData: {
+            title: '',
+            description: '',
+            video: ''
+        }, 
+        canSubmit: false,
+    }
 
-        }
+    submitVideo = () => {
+        let {uploadData} = this.state
+        let {postVideo, user} = this.props
+
+   //    uploadData.user = user
+        console.log("video", uploadData)
+        postVideo(uploadData)
     }
 
     formFill(property, event) {
     
-        let {user} = this.state
-        user[property] = event.target.value
+        let {uploadData} = this.state
+        uploadData[property] = event.target.value
+
+        this.setState({uploadData:uploadData})
+        this.canSubmit()
+    }
+
+    canSubmit = () => {
+        const {uploadData} = this.state
  
-        this.setState({user:user})
-     
- 
-     }
+        if(uploadData.title.length === 0 || uploadData.description.length === 0 || uploadData.video.length === 0) {
+            this.setState({canSubmit: false})
+        } else {
+            this.setState({canSubmit: true})
+        }
+    
+    }
+
+    loadVideo (video, e) {
+    
+        let reader = new FileReader()
+        let files = e.target.files
+        reader.readAsDataURL(files[0])
+      
+        this.setState({fileLoading: true})
+        reader.onload = (e) => {
+            let {uploadData} = this.state
+            uploadData.video = e.target.result
+            this.setState({uploadData: uploadData})
+            this.setState({fileLoading: false})
+            this.canSubmit()
+        }
+
+    }
 
     render() {
 
         const {classes} = this.props
+        const {fileLoading, canSubmit} = this.state
 
         return (
             <Paper>
@@ -69,8 +121,7 @@ class Upload extends Component {
                         <InputLabel className={classes.labelText} htmlFor="videoTitle">Title</InputLabel>
                         <Input required className={classes.inputMargins}
                             id="videoTitle"
-                            required
-                            onChange={this.formFill.bind(this, 'videoTitle')}
+                            onChange={this.formFill.bind(this, 'title')}
                             startAdornment={
                                 <InputAdornment position="start"> 
                                 *
@@ -82,35 +133,42 @@ class Upload extends Component {
                             <InputLabel className={classes.labelText} htmlFor="descripttion">Description</InputLabel>
                             <Input className={classes.inputMargins}
                                 id="verifyPassword"
-                                multiline="true"
+                                multiline
                                 maxLength="255"
                                 rowsMax="4"
                                 onChange={this.formFill.bind(this, 'description')}
                                 startAdornment={
                                     <InputAdornment position="start">
-                                        
+                                        ""
                                     </InputAdornment>
                                 }
                             />
                         </FormControl>
+                        <div className={classes.chooseFile}>
+                            <Button
+                                className={classes.inputMargins}
+                                variant="raised"
+                                color="primary"
+                                label='My Label'>
+                                <input type="file" onChange={this.loadVideo.bind(this, 'video')}/>
+                            </Button>
+                            {fileLoading && <CircularProgress size={48} className={classes.fileProgress} />}
+                        </div>
                         <Button
                             className={classes.inputMargins}
                             variant="raised"
                             color="primary"
-                            containerElement='label' // <-- Just add me!
-                            label='My Label'>
-                            <input type="file" />
-                        </Button>
-                        <Button
-                            className={classes.inputMargins}
-                            variant="raised"
-                            color="primary"
+                            disabled={!canSubmit}
+                            onClick={this.submitVideo}
                         >
                             Submit
                         </Button>
 
                     
                 </form>
+                <div>
+                        {Object.keys()}
+                </div>
             </Paper>    
         )
     }
@@ -118,11 +176,10 @@ class Upload extends Component {
 }
 
 const mapDispatchToProps = (dispatch) => {
-    // return {
-    //     userLogin: (user) => dispatch(userLogin(user)),
-      
-    // }
- }
+      return {
+            postVideo: (video) => dispatch(postVideo(video))  
+      }
+  }
 
 const mapStateToProps = (state, ownProps) => {
     return {

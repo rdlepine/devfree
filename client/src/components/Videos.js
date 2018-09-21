@@ -1,15 +1,12 @@
 import React, {Component} from 'react'
-import {Redirect} from 'react-router-dom'
 import { withStyles } from '@material-ui/core/styles'
-import {Card, CardHeader, CardContent, FormControl, Input, InputAdornment, InputLabel, Button, Avatar, IconButton, Typography} from '@material-ui/core'
+import {Card, CardHeader, CardContent, Avatar, Typography, Button} from '@material-ui/core'
 import {userLogin} from '../containers/actions';
-import {Email, Lock, Videocam, CloudUpload} from '@material-ui/icons'
+import {Videocam, CloudUpload} from '@material-ui/icons'
 import Video from './Video'
 import Upload from './Upload'
 import {connect} from 'react-redux'
-import logo from '../images/logo.png'
 import 'typeface-roboto'
-import * as api from '../data/api.js'
 import mediaJSON from '../data/streaming.js'
 
 const styles = {
@@ -76,8 +73,6 @@ const styles = {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
-
-        margin: 'auto auto 30 auto',
         width: 300,
         margin: 'auto',
     },
@@ -158,9 +153,9 @@ class Videos extends Component {
                             :
                             <div className={classes.video}>
                                 {
-                                    videos.map((video) => {
+                                    videos.map((video, index) => {
                                         return (
-                                            <Video video={video}/>
+                                            <Video key={index} video={video}/>
                                         )
                                     })
                                 }
