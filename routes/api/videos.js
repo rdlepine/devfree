@@ -1,5 +1,7 @@
 const express = require('express')
 const router = express.Router()
+const Video = require('../../models/Video')
+
 
 // @route GET api/profile/test
 // @desc Tests profile route

@@ -15,7 +15,7 @@ export function userLogout() {
 }
 
 export function postVideo(video) {
-  
+    console.log("post video", video)
     return (dispatch) => {
             
             api.postVideo(video).then( (newVideo) => {
@@ -27,6 +27,7 @@ export function postVideo(video) {
  }
 
  export function putVideo(video) {
+    console.log("my video",video)
     return {
         type: a.ADD_VIDEO,
         video,

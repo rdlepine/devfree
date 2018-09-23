@@ -166,9 +166,7 @@ class Upload extends Component {
 
                     
                 </form>
-                <div>
-                        {Object.keys()}
-                </div>
+               
             </Paper>    
         )
     }
