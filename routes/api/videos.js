@@ -9,9 +9,10 @@ const Video = require('../../models/Video')
 router.get('/', (req, res) => {
     res.json({videos: "profile work"})
 })
-
+ 
 router.post("/postvideo", (req, res) => {
-    res.json()
+    console.log("blah")
+  //  res.json()
 })
 
 module.exports = router

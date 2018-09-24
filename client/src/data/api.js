@@ -46,7 +46,6 @@ export const doLogin = (user) => {
 }
 
 export const postVideo = (video) => {
-  
     return fetch(`${api}/videos/postvideo`, {
       method: 'POST',
       headers: {
@@ -55,8 +54,11 @@ export const postVideo = (video) => {
       },
       body: JSON.stringify(video)
     }).then(res => {
-        return res.json()
-    }).catch((err) => {err: err})
+       console.log('res')
+       // return res.json()
+    }).catch((err) => {
+       console.log("ERRRR", err)
+    })
   }
 
 export const getAll = () => 

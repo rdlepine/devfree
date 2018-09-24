@@ -68,7 +68,7 @@ class Upload extends Component {
         let {postVideo, user} = this.props
 
    //    uploadData.user = user
-        console.log("video", uploadData)
+   //     console.log("video", uploadData)
         postVideo(uploadData)
     }
 

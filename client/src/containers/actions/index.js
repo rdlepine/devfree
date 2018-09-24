@@ -15,6 +15,7 @@ export function userLogout() {
 }
 
 export function postVideo(video) {
+    debugger
     console.log("post video", video)
     return (dispatch) => {
             
