@@ -1,5 +1,5 @@
-//const api = "http://simplesemisolutions.com:5000/api"
-const api = "http://localhost:5000/api"
+const api = "http://simplesemisolutions.com:5000/api"
+//const api = "http://localhost:5000/api"
 
 // Generate a unique token for storing your bookshelf data on the backend server.
 let token = localStorage.token
